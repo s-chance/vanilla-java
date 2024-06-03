@@ -25,6 +25,11 @@ public class Main {
 //        print(12L);
         print(new Car());
         print2("hello world", 123);
+
+        List<Integer> integers = new ArrayList<>();
+        integers.add(123);
+        integers.add(456);
+        printList(integers);
     }
 
     private static <T extends Vehicle & Thing> void print(T content) {
@@ -34,5 +39,17 @@ public class Main {
     private static <T, K> void print2(T content, K content2) {
         System.out.println(content);
         System.out.println(content2);
+    }
+
+    // List<Integer> is not a subclass of List<Object>
+//    private static void printList(List<Object> content) {
+//        System.out.println(content);
+//    }
+
+    // using wildcard to match all types
+    // wildcard will lose the specific type
+    // if you don't need to make a modification and want to streamline code, you can use wildcard
+    private static void printList(List<?> content) {
+        System.out.println(content);
     }
 }
