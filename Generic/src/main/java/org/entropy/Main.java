@@ -19,5 +19,14 @@ public class Main {
         // String item = (String) list.get(1);
 
         System.out.println(list);
+
+//        print("hello world");
+//        print(123);
+//        print(12L);
+        print(new Car());
+    }
+
+    private static <T extends Vehicle & Thing> void print(T content) {
+        System.out.println(content);
     }
 }
