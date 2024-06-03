@@ -30,6 +30,10 @@ public class Main {
         integers.add(123);
         integers.add(456);
         printList(integers);
+
+        ArrayList<Vehicle> vehicles = new ArrayList<>();
+        vehicles.add(new Car());
+        printVehicleList(vehicles);
     }
 
     private static <T extends Vehicle & Thing> void print(T content) {
@@ -50,6 +54,11 @@ public class Main {
     // wildcard will lose the specific type
     // if you don't need to make a modification and want to streamline code, you can use wildcard
     private static void printList(List<?> content) {
+        System.out.println(content);
+    }
+
+    // upper bound wildcard
+    private static void printVehicleList(List<? extends Vehicle> content) {
         System.out.println(content);
     }
 }
