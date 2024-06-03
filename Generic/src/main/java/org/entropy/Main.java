@@ -31,9 +31,12 @@ public class Main {
         integers.add(456);
         printList(integers);
 
-        ArrayList<Vehicle> vehicles = new ArrayList<>();
+        List<Vehicle> vehicles = new ArrayList<>();
         vehicles.add(new Car());
         printVehicleList(vehicles);
+
+        vehicles.add(new Bus());
+        printCarList(vehicles);
     }
 
     private static <T extends Vehicle & Thing> void print(T content) {
@@ -59,6 +62,11 @@ public class Main {
 
     // upper bound wildcard
     private static void printVehicleList(List<? extends Vehicle> content) {
+        System.out.println(content);
+    }
+
+    // lower bound wildcard
+    private static void printCarList(List<? super Car> content) {
         System.out.println(content);
     }
 }
