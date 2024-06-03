@@ -1,6 +1,6 @@
 package org.entropy;
 
-public class GenericPrinter<T extends Vehicle> {
+public class GenericPrinter<T extends Vehicle & Thing> {
     T content;
 
 
