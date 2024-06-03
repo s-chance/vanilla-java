@@ -24,9 +24,15 @@ public class Main {
 //        print(123);
 //        print(12L);
         print(new Car());
+        print2("hello world", 123);
     }
 
     private static <T extends Vehicle & Thing> void print(T content) {
         System.out.println(content);
+    }
+
+    private static <T, K> void print2(T content, K content2) {
+        System.out.println(content);
+        System.out.println(content2);
     }
 }
