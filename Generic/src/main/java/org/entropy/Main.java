@@ -2,7 +2,7 @@ package org.entropy;
 
 public class Main {
     public static void main(String[] args) {
-        IntegerPrinter printer = new IntegerPrinter(123);
+        StringPrinter printer = new StringPrinter("hello world");
         printer.print();
     }
 }
