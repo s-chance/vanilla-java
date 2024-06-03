@@ -1,6 +1,6 @@
 package org.entropy;
 
-public class GenericPrinter<T extends Vehicle & Thing> {
+public class GenericPrinter<T extends Vehicle> {
     T content;
 
 
@@ -9,6 +9,7 @@ public class GenericPrinter<T extends Vehicle & Thing> {
     }
 
     public void print() {
+        content.getColor(); // T extends Vehicle
         System.out.println(content);;
     }
 }
