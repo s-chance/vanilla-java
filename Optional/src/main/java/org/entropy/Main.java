@@ -13,6 +13,12 @@ public class Main {
                 () -> System.out.println("User not found")
         );
 
+        Optional<User> optionalUser2 = optionalUser.filter(user -> user.getFullName().equals("entropy tree"));
+        System.out.println(optionalUser2.isPresent());
+
+        Optional<String> optionalFullName = optionalUser.map(User::getFullName);
+        System.out.println(optionalFullName.isPresent());
+
 
         // why is this code doing the same thing again?
         // that's not what it was meant to be, and it shouldn't be used that way
@@ -24,12 +30,12 @@ public class Main {
 //        }
 
         // User will instantiate whether they are null or not
-        User user = optionalUser.orElse(new User("default", "default user"));
-        System.out.println(user.getFullName());
+//        User user = optionalUser.orElse(new User("default", "default user"));
+//        System.out.println(user.getFullName());
 
         // User will instantiate only when the optionalUser is null
-        User user2 = optionalUser.orElseGet(() -> new User("default", "default user"));
-        System.out.println(user2.getFullName());
+//        User user2 = optionalUser.orElseGet(() -> new User("default", "default user"));
+//        System.out.println(user2.getFullName());
 
         // throws a custom exception
 //        optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
@@ -42,11 +48,11 @@ public class Main {
 //            System.out.println(defaultUser.getFullName());
 //        }
 
-        String value = "entropy";
-        Optional<String> optionalBox = Optional.ofNullable(value);
+//        String value = "entropy";
+//        Optional<String> optionalBox = Optional.ofNullable(value);
 //        System.out.println(optionalBox.get()); // not recommend
-        System.out.println(optionalBox.isPresent());
-        System.out.println(optionalBox.isEmpty());
+//        System.out.println(optionalBox.isPresent());
+//        System.out.println(optionalBox.isEmpty());
 
     }
 }
