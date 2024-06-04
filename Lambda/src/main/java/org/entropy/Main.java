@@ -5,11 +5,15 @@ public class Main {
 //        public void send() {
 //            System.out.println("This is an email.");
 //        }
-        sendMessage((name, title) -> {
+
+        // lambda expression can only use for the method which only has one abstract method
+        // which called "Functional Interface"
+        Message lambda = (name, title) -> {
             System.out.println("This is an email to " + name + " about " + title);
             System.out.println("Here there");
             return "success";
-        });
+        };
+        sendMessage(lambda);
     }
 
     // Interface-oriented programming
