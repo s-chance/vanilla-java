@@ -1,5 +1,5 @@
 package org.entropy;
 
 public interface Message {
-    void send();
+    void send(String name);
 }

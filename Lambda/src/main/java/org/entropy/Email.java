@@ -7,7 +7,7 @@ public class Email implements Message {
     }
 
     @Override
-    public void send() {
+    public void send(String name) {
         System.out.println("This is an email.");
     }
 }
