@@ -7,6 +7,13 @@ public class Main {
         UserRepository userRepository = new UserRepository();
         Optional<User> optionalUser = userRepository.findUserByName("entropy2");
 
+        optionalUser.ifPresent(user -> System.out.println(user.getFullName()));
+        optionalUser.ifPresentOrElse(
+                user -> System.out.println(user.getFullName()),
+                () -> System.out.println("User not found")
+        );
+
+
         // why is this code doing the same thing again?
         // that's not what it was meant to be, and it shouldn't be used that way
 //        if (optionalUser.isPresent()) {
