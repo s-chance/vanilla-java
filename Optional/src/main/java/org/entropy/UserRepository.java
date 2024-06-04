@@ -1,11 +1,13 @@
 package org.entropy;
 
+import java.util.Optional;
+
 public class UserRepository {
-    public User findUserByName(String name) {
+    public Optional<User> findUserByName(String name) {
         if ("entropy".equals(name)) {
-            return new User("entropy", "entropy tree");
+            return Optional.of(new User("entropy", "entropy tree"));
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 }
