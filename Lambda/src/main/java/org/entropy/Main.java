@@ -5,14 +5,14 @@ public class Main {
 //        public void send() {
 //            System.out.println("This is an email.");
 //        }
-        sendMessage((name) -> {
-            System.out.println("This is an email to " + name);
+        sendMessage((name, title) -> {
+            System.out.println("This is an email to " + name + " about " + title);
             System.out.println("Here there");
         });
     }
 
     // Interface-oriented programming
     static void sendMessage(Message message) {
-        message.send("entropy");
+        message.send("entropy", "hello world");
     }
 }

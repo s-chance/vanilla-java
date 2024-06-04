@@ -7,7 +7,7 @@ public class Sms implements Message {
     }
 
     @Override
-    public void send(String name) {
+    public void send(String name, String title) {
         System.out.println("This is a sms.");
     }
 }
