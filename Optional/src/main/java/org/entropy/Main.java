@@ -1,23 +1,32 @@
 package org.entropy;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
         UserRepository userRepository = new UserRepository();
         Optional<User> optionalUser = userRepository.findUserByName("entropy2");
 
-        optionalUser.ifPresent(user -> System.out.println(user.getFullName()));
-        optionalUser.ifPresentOrElse(
-                user -> System.out.println(user.getFullName()),
-                () -> System.out.println("User not found")
-        );
+//        Optional<Optional<String>> s = optionalUser.map(User::getFullName2);
+//        Optional<String> s2 = optionalUser.flatMap(User::getFullName2);
 
-        Optional<User> optionalUser2 = optionalUser.filter(user -> user.getFullName().equals("entropy tree"));
-        System.out.println(optionalUser2.isPresent());
+        Stream<String> a = optionalUser
+                .map(User::getName)
+                .stream();
+        a.forEach(System.out::println);
 
-        Optional<String> optionalFullName = optionalUser.map(User::getFullName);
-        System.out.println(optionalFullName.isPresent());
+//        optionalUser.ifPresent(user -> System.out.println(user.getFullName()));
+//        optionalUser.ifPresentOrElse(
+//                user -> System.out.println(user.getFullName()),
+//                () -> System.out.println("User not found")
+//        );
+
+//        Optional<User> optionalUser2 = optionalUser.filter(user -> user.getFullName().equals("entropy tree"));
+//        System.out.println(optionalUser2.isPresent());
+//
+//        Optional<String> optionalFullName = optionalUser.map(User::getFullName);
+//        System.out.println(optionalFullName.isPresent());
 
 
         // why is this code doing the same thing again?

@@ -1,5 +1,7 @@
 package org.entropy;
 
+import java.util.Optional;
+
 public class User {
     String name;
     String fullName;
@@ -23,5 +25,9 @@ public class User {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public Optional<String> getFullName2() {
+        return Optional.ofNullable(fullName);
     }
 }
