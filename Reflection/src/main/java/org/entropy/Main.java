@@ -2,6 +2,7 @@ package org.entropy;
 
 public class Main {
     public static void main(String[] args) {
-        Class<User> userClass = User.class;
+        User user = new User("entropy", 22);
+        Class<? extends User> clazz = user.getClass();
     }
 }
