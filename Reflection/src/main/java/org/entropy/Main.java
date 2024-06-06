@@ -7,11 +7,10 @@ import java.lang.reflect.Method;
 
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
-        Class<?> clazz = Class.forName("org.entropy.User");
-        Constructor<?> constructor = clazz.getDeclaredConstructor(String.class, int.class);
-        Object obj = constructor.newInstance("entropy", 55);
-        Method method = clazz.getDeclaredMethod("myPrivateMethod", String.class, String.class);
-        method.setAccessible(true);
-        method.invoke(obj, "hello world", "!");
+        Address address = new Address("345 Spear Street", "94105");
+        Customer customer = new Customer("entropy", "entropy@example.com");
+        Order order = new Order(customer, address);
+        order.getCustomer().printName();
+        order.getAddress().printStreet();
     }
 }
