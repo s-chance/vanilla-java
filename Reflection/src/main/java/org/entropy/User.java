@@ -3,7 +3,7 @@ package org.entropy;
 import java.util.List;
 
 public class User extends Person {
-
+    @MyAnnotation
     public String name;
     private final int age;
     private String email;
