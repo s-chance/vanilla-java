@@ -7,10 +7,10 @@ import java.lang.reflect.Method;
 
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
-        Address address = new Address("345 Spear Street", "94105");
-        Customer customer = new Customer("entropy", "entropy@example.com");
-        Order order = new Order(customer, address);
-        order.getCustomer().printName();
-        order.getAddress().printStreet();
+        Container container = new Container();
+        container.init();
+        Class<?> clazz = Class.forName("org.entropy.Customer");
+        Object obj = container.getServiceInstanceByClass(clazz);
+        System.out.println(obj);
     }
 }
