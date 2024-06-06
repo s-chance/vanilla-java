@@ -1,5 +1,6 @@
 package org.entropy;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -35,5 +36,20 @@ public class Container {
             }
         }
         return null;
+    }
+
+    public Object createInstance(Class<?> clazz) throws InvocationTargetException, IllegalAccessException, InstantiationException, NoSuchMethodException {
+        Constructor<?>[] constructors = clazz.getDeclaredConstructors();
+        for (Constructor<?> constructor : constructors) {
+            if (constructor.getDeclaredAnnotation(Autowired.class) != null) {
+                Class<?>[] parameterTypes = constructor.getParameterTypes();
+                Object[] arguments = new Object[parameterTypes.length];
+                for (int i = 0; i < parameterTypes.length; i++) {
+                    arguments[i] = getServiceInstanceByClass(parameterTypes[i]);
+                }
+                return constructor.newInstance(arguments);
+            }
+        }
+        return clazz.getConstructor().newInstance();
     }
 }

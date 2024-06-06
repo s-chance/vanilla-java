@@ -17,10 +17,12 @@ public class Customer {
         return email;
     }
 
+    @Printable
     public void printName() {
         System.out.println("Customer name: " + name);
     }
 
+    @Printable
     public void printEmail() {
         System.out.println("Customer email: " + email);
     }

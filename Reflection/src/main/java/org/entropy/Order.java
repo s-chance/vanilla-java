@@ -5,6 +5,7 @@ public class Order {
 
     private Address address;
 
+    @Autowired
     public Order(Customer customer, Address address) {
         this.customer = customer;
         this.address = address;

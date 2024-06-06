@@ -17,10 +17,12 @@ public class Address {
         return postCode;
     }
 
+    @Printable
     public void printStreet() {
         System.out.println("Address street: " + street);
     }
 
+    @Printable
     public void printPostCode() {
         System.out.println("Address postcode: " + postCode);
     }
