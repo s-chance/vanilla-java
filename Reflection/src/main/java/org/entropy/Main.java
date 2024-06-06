@@ -10,8 +10,9 @@ public class Main {
         Class<?> clazz = Class.forName("org.entropy.User");
         Constructor<?> constructor = clazz.getDeclaredConstructor(String.class, int.class);
         Object obj = constructor.newInstance("entropy", 55);
-        if (obj instanceof User) {
-            User user = (User) obj;
-        }
+        Field field = clazz.getDeclaredField("age");
+        field.setAccessible(true);
+        field.set(obj, 33);
+        System.out.println(field.get(obj));
     }
 }
