@@ -21,7 +21,9 @@ public class User extends Person {
         this.age = age;
     }
 
-    public User() {
+    @Autowired
+    public User(Message message) {
+        this.message = message;
         this.age = 18;
     }
 

@@ -12,6 +12,7 @@ public class Config {
         return new Address("345 Spear Street", "94105");
     }
 
+    @Bean
     public Message message() {
         return new Message("hello world");
     }

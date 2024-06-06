@@ -10,7 +10,7 @@ public class Main {
         Container container = new Container();
         container.init();
         String className = "org.entropy.User";
-        String fieldName = "address";
+        String fieldName = "message";
         Class<?> clazz = Class.forName(className);
         Object obj = container.createInstance(clazz);
         Field field = clazz.getDeclaredField(fieldName);
