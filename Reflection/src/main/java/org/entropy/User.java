@@ -2,7 +2,7 @@ package org.entropy;
 
 import java.util.List;
 
-public class User {
+public class User extends Person {
 
     public String name;
     private final int age;
