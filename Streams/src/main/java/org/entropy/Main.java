@@ -14,8 +14,7 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        IntStream intStream = IntStream.rangeClosed(1, 4);
-        Stream<Integer> integerStream = intStream.boxed();
-
+        Stream<String> constantStream = Stream.generate(() -> "entropy").limit(5);
+        constantStream.forEach(System.out::println);
     }
 }
