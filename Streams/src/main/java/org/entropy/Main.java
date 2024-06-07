@@ -19,9 +19,10 @@ public class Main {
                 new Person("Brain", 10, "USA"),
                 new Person("Jack", 12, "UK"),
                 new Person("Alex", 22, "USA"),
+                new Person("Steven", 24, "FR"),
                 new Person("Steven", 24, "FR")
         );
-        Stream.of("apple", "orange", "apple", "orange", "banana")
+        people.stream()
                 .distinct()
                 .forEach(System.out::println);
     }
