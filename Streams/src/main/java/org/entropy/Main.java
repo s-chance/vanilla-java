@@ -24,12 +24,18 @@ public class Main {
                         new Person("Steven", 24, "FR")
                 )
         );
-        peopleGroups.stream()
-                .flatMap(Collection::stream)
-                .map(Person::getName)
-                .forEach(System.out::println);
-        peopleGroups.stream()
-                .flatMap(people -> people.stream().map(Person::getName))
-                .forEach(System.out::println);
+        List<Person> people = List.of(
+                new Person("Peter", 33, "USA"),
+                new Person("Brain", 10, "USA"),
+                new Person("Jack", 12, "UK"),
+                new Person("Alex", 22, "USA"),
+                new Person("Steven", 24, "FR")
+        );
+       people.stream()
+               .map(Person::getName)
+               .forEach(System.out::println);
+       people.stream()
+               .flatMap(person -> Stream.of(person.getName()))
+               .forEach(System.out::println);
     }
 }
