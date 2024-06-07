@@ -22,7 +22,7 @@ public class Main {
                 new Person("Steven", 24, "FR")
         );
         people.stream()
-                .limit(3)
+                .skip(3)
                 .forEach(System.out::println);
     }
 }
