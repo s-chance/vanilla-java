@@ -21,8 +21,8 @@ public class Main {
                 new Person("Alex", 22, "USA"),
                 new Person("Steven", 24, "FR")
         );
-        people.stream()
-                .filter(person -> person.getAge() > 18)
+        Stream.of("apple", "orange", "apple", "orange", "banana")
+                .distinct()
                 .forEach(System.out::println);
     }
 }
