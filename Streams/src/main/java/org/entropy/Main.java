@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        Stream<Integer> iterateStream = Stream.iterate(0, n -> n <= 10, n -> n + 2);
-        iterateStream.forEach(System.out::println);
+        List.of("a", "b", "c").parallelStream().forEach(System.out::println);
     }
 }
