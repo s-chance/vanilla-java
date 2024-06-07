@@ -31,11 +31,7 @@ public class Main {
                 new Person("Alex", 22, "USA"),
                 new Person("Steven", 24, "FR")
         );
-       people.stream()
-               .map(Person::getName)
-               .forEach(System.out::println);
-       people.stream()
-               .flatMap(person -> Stream.of(person.getName()))
-               .forEach(System.out::println);
+        IntStream ageStream = people.stream().mapToInt(Person::getAge);
+        ageStream.forEach(System.out::println);
     }
 }
