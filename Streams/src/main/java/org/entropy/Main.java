@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        Stream.generate(Math::random).limit(5).forEach(System.out::println);
+        Stream<Integer> iterateStream = Stream.iterate(0, n -> n <= 10, n -> n + 2);
+        iterateStream.forEach(System.out::println);
     }
 }
