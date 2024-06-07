@@ -1,5 +1,9 @@
 package org.entropy;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,13 +12,11 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        Stream.Builder<String> streamBuilder = Stream.builder();
-        streamBuilder.add("a");
-        streamBuilder.add("b");
-        if (Math.random() > 0.5) {
-            streamBuilder.add("c");
+        Path path = Paths.get("file.txt");
+        try (Stream<String> lines = Files.lines(path)) {
+            lines.forEach(System.out::println);
+        } catch (IOException e) {
+            e.getStackTrace();
         }
-        Stream<String> stream = streamBuilder.build();
-        stream.forEach(System.out::println);
     }
 }
