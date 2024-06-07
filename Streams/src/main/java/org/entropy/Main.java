@@ -34,5 +34,8 @@ public class Main {
         Stream.of("blueberry", "strawberry", "apple", "peach", "pear")
                 .sorted(Comparator.comparingInt(String::length).reversed())
                 .forEach(System.out::println);
+        people.stream()
+                .sorted(Comparator.comparingInt(Person::getAge).reversed())
+                .forEach(System.out::println);
     }
 }
