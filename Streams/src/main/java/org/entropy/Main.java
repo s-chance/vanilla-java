@@ -21,8 +21,6 @@ public class Main {
                 new Person("Alex", 22, "USA"),
                 new Person("Steven", 24, "FR")
         );
-        people.stream()
-                .skip(3)
-                .forEach(System.out::println);
+        people.stream().map(Person::getName).forEach(System.out::println);
     }
 }
