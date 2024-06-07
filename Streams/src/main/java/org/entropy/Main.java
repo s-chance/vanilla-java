@@ -8,9 +8,13 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        Stream<String> stream1 = Stream.of("a", "b", "c");
-        Stream<String> stream2 = Stream.of("d", "e", "f");
-        Stream<String> concat = Stream.concat(stream1, stream2);
-        concat.forEach(System.out::println);
+        Stream.Builder<String> streamBuilder = Stream.builder();
+        streamBuilder.add("a");
+        streamBuilder.add("b");
+        if (Math.random() > 0.5) {
+            streamBuilder.add("c");
+        }
+        Stream<String> stream = streamBuilder.build();
+        stream.forEach(System.out::println);
     }
 }
