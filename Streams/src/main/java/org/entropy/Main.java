@@ -8,8 +8,7 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        String[] array = {"a", "b", "c"};
-        Stream<String> stream = Arrays.stream(array);
+        Stream<String> stream = Stream.of("a", "b", "c");
         stream.forEach(System.out::println);
     }
 }
