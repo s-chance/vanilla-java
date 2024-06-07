@@ -14,7 +14,6 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        Stream<String> constantStream = Stream.generate(() -> "entropy").limit(5);
-        constantStream.forEach(System.out::println);
+        Stream.generate(Math::random).limit(5).forEach(System.out::println);
     }
 }
