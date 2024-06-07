@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        IntStream intStream = IntStream.of(1, 2, 3);
+        IntStream intStream = IntStream.range(1, 4);
         intStream.forEach(System.out::println);
     }
 }
