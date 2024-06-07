@@ -2,6 +2,7 @@ package org.entropy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,12 +13,16 @@ public class Main {
                 new Person("Alex", 22, "USA"),
                 new Person("Steven", 24, "FR")
         );
-        List<Person> adults = new ArrayList<>();
-        for (Person person : people) {
-            if (person.getAge() > 18) {
-                adults.add(person);
-            }
-        }
+        List<Person> adults = people.stream()
+                .filter(person -> person.getAge() > 18)
+                .collect(Collectors.toList());
         System.out.println(adults);
+//        List<Person> adults = new ArrayList<>();
+//        for (Person person : people) {
+//            if (person.getAge() > 18) {
+//                adults.add(person);
+//            }
+//        }
+//        System.out.println(adults);
     }
 }
