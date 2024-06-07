@@ -14,6 +14,15 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        List.of("a", "b", "c").parallelStream().forEach(System.out::println);
+        List<Person> people = List.of(
+                new Person("Peter", 33, "USA"),
+                new Person("Brain", 10, "USA"),
+                new Person("Jack", 12, "UK"),
+                new Person("Alex", 22, "USA"),
+                new Person("Steven", 24, "FR")
+        );
+        people.stream()
+                .filter(person -> person.getAge() > 18)
+                .forEach(System.out::println);
     }
 }
