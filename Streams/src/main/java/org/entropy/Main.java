@@ -31,7 +31,8 @@ public class Main {
                 new Person("Alex", 22, "USA"),
                 new Person("Steven", 24, "FR")
         );
-        IntStream ageStream = people.stream().mapToInt(Person::getAge);
-        ageStream.forEach(System.out::println);
+        Stream.of("blueberry", "strawberry", "apple", "peach", "pear")
+                .sorted(Comparator.comparingInt(String::length).reversed())
+                .forEach(System.out::println);
     }
 }
