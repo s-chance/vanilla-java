@@ -18,8 +18,8 @@ public class Main {
                 new Person("Alex", 22, "USA"),
                 new Person("Steven", 24, "FR")
         );
-        boolean result = people.stream()
-                .allMatch(person -> person.getAge() != 18);
-        System.out.println(result);
+//        Optional<Person> optionalPerson = people.stream().findFirst();
+        Optional<Person> optionalPerson = people.stream().findAny();
+        optionalPerson.ifPresent(System.out::println);
     }
 }
