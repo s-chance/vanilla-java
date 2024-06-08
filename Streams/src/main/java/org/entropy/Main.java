@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -18,34 +19,41 @@ public class Main {
                 new Person("Alex", 22, "USA"),
                 new Person("Steven", 24, "FR")
         );
-//        List<Person> adults = people.stream()
-//                .filter(person -> person.getAge() > 18)
-//                .collect(Collectors.toList());
-//        System.out.println(adults);
-//        Map<String, Integer> adults = people.stream()
-//                .filter(person -> person.getAge() > 18)
-//                .collect(Collectors.toMap(
-//                        Person::getName,
-//                        Person::getAge
+//        ArrayList<Person> collect = people.stream().parallel()
+//                .collect(Collector.of(
+//                        () -> new ArrayList<>(),
+//                        (list, person) -> {
+//                            System.out.println("Accumulator: " + person);
+//                            list.add(person);
+//                        },
+//                        (left, right) -> {
+//                            System.out.println("Combiner: " + left);
+//                            left.addAll(right);
+//                            return left;
+//                        },
+//                        Collector.Characteristics.IDENTITY_FINISH
 //                ));
-//        System.out.println(adults);
-        Map<String, List<Person>> peopleByCountry = people.stream()
-                .collect(Collectors.groupingBy(Person::getCountry));
-        peopleByCountry.forEach((k, v) -> System.out.println(k + "=" + v));
-
-        Map<Boolean, List<Person>> agePartition = people.stream()
-                .collect(Collectors.groupingBy(person -> person.getAge() > 18));
-        agePartition.forEach((k, v) -> System.out.println(k + "=" + v));
-
-        String joinedName = people.stream()
-                .map(Person::getName)
-                .collect(Collectors.joining(","));
-        System.out.println(joinedName);
-
-        IntSummaryStatistics ageSummary = people.stream()
-                .collect(Collectors.summarizingInt(Person::getAge));
-        System.out.println(ageSummary);
-        System.out.println(ageSummary.getAverage());
-        System.out.println(ageSummary.getMax());
+//        System.out.println(collect);
+        int size = people.stream().parallel()
+                .collect(Collector.of(
+                        HashMap<String, List<Person>>::new,
+                        (map, person) -> {
+                            System.out.println("Accumulator: " + person);
+                            map.computeIfAbsent(person.getCountry(), k -> new ArrayList<>()).add(person);
+                        },
+                        (left, right) -> {
+                            System.out.println("Combiner: "
+                                    + System.lineSeparator() + "left: " + left
+                                    + System.lineSeparator() + "right: " + right
+                            );
+                            right.forEach((k, v) -> left.merge(k, v, (list, newList) -> {
+                                list.addAll(newList);
+                                return list;
+                            }));
+                            return left;
+                        },
+                        HashMap::size
+                ));
+        System.out.println(size);
     }
 }
