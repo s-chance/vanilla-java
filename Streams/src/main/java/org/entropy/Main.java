@@ -25,8 +25,13 @@ public class Main {
 //        IntStream ageStream = people.stream().mapToInt(Person::getAge);
 //        int sum = ageStream.sum();
 //        System.out.println(sum);
-        IntStream ageStream = people.stream().mapToInt(Person::getAge);
-        OptionalDouble average = ageStream.average();
-        average.ifPresent(System.out::println);
+//        IntStream ageStream = people.stream().mapToInt(Person::getAge);
+//        int sum = ageStream.reduce(0, (a, b) -> a + b);
+//        System.out.println(sum);
+        String joinedName = people.stream()
+                .map(Person::getName)
+                .reduce("", (a, b) -> a + b + ",");
+        System.out.println(joinedName);
+
     }
 }
