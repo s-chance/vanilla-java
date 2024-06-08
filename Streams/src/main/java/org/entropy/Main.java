@@ -18,24 +18,22 @@ public class Main {
                 ),
                 List.of(
                         new Person("Jack", 12, "UK"),
+                        new Person("Alex", 22, "USA"),
                         new Person("Alex", 22, "USA")
                 ),
                 List.of(
+                        new Person("Steven", 24, "FR"),
                         new Person("Steven", 24, "FR")
                 )
         );
-        List<Person> people = List.of(
-                new Person("Peter", 33, "USA"),
-                new Person("Brain", 10, "USA"),
-                new Person("Jack", 12, "UK"),
-                new Person("Alex", 22, "USA"),
-                new Person("Steven", 24, "FR")
-        );
-        Stream.of("blueberry", "strawberry", "apple", "peach", "pear")
-                .sorted(Comparator.comparingInt(String::length).reversed())
-                .forEach(System.out::println);
-        people.stream()
+        Stream<String> results = peopleGroups.stream()
+                .flatMap(Collection::stream)
+                .filter(person -> person.getAge() > 18)
+                .distinct()
                 .sorted(Comparator.comparingInt(Person::getAge).reversed())
-                .forEach(System.out::println);
+                .map(Person::getName)
+                .limit(3)
+                .skip(1);
+        results.forEach(System.out::println);
     }
 }
