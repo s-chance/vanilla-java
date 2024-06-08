@@ -13,25 +13,11 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        ConcurrentHashMap<String, String> collect = Set.of("E", "N", "T", "R", "O", "P", "Y").parallelStream()
-                .map(String::toLowerCase)
-                .collect(Collector.of(
-                        () -> {
-                            System.out.println("Supplier: new ConcurrentHashMap" + " Thread: " + Thread.currentThread().getName());
-                            return new ConcurrentHashMap<>();
-                        },
-                        (map, item) -> {
-                            System.out.println("Accumulator: " + item + " Thread: " + Thread.currentThread().getName());
-                            map.put(item.toUpperCase(), item);
-                        },
-                        (left, right) -> {
-                            System.out.println("Combiner: " + left + " + " + right + " Thread: " + Thread.currentThread().getName());
-                            left.putAll(right);
-                            return left;
-                        },
-                        Collector.Characteristics.IDENTITY_FINISH,
-                        Collector.Characteristics.CONCURRENT
-                ));
-        System.out.println(collect);
+        Integer res = List.of(1, 2, 3, 4).parallelStream()
+                .reduce(0, (a, b) -> {
+                    System.out.println(a + " - " + b + " Thread: " + Thread.currentThread().getName());
+                    return a - b;
+                });
+        System.out.println(res);
     }
 }
