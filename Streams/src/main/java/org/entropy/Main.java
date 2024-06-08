@@ -14,7 +14,22 @@ public class Main {
     public static void main(String[] args) {
         List<String> collect = List.of("E", "N", "T", "R", "O", "P", "Y").parallelStream()
                 .map(String::toLowerCase)
-                .collect(Collectors.toList());
+                .collect(Collector.of(
+                        () -> {
+                            System.out.println("Supplier: new ArrayList" + " Thread: " + Thread.currentThread().getName());
+                            return new ArrayList<>();
+                        },
+                        (list, item) -> {
+                            System.out.println("Accumulator: " + item + " Thread: " + Thread.currentThread().getName());
+                            list.add(item);
+                        },
+                        (left, right) -> {
+                            System.out.println("Combiner: " + left + " + " + right + " Thread: " + Thread.currentThread().getName());
+                            left.addAll(right);
+                            return left;
+                        },
+                        Collector.Characteristics.IDENTITY_FINISH
+                ));
         System.out.println(collect);
     }
 }
