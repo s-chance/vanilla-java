@@ -18,8 +18,15 @@ public class Main {
                 new Person("Alex", 22, "USA"),
                 new Person("Steven", 24, "FR")
         );
-//        Optional<Person> optionalPerson = people.stream().findFirst();
-        Optional<Person> optionalPerson = people.stream().findAny();
-        optionalPerson.ifPresent(System.out::println);
+//        long count = people.stream().count();
+//        System.out.println(count);
+//        Optional<Person> optionalPerson = people.stream().min(Comparator.comparingInt(Person::getAge));
+//        optionalPerson.ifPresent(System.out::println);
+//        IntStream ageStream = people.stream().mapToInt(Person::getAge);
+//        int sum = ageStream.sum();
+//        System.out.println(sum);
+        IntStream ageStream = people.stream().mapToInt(Person::getAge);
+        OptionalDouble average = ageStream.average();
+        average.ifPresent(System.out::println);
     }
 }
