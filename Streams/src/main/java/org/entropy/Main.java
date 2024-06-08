@@ -18,20 +18,34 @@ public class Main {
                 new Person("Alex", 22, "USA"),
                 new Person("Steven", 24, "FR")
         );
-//        long count = people.stream().count();
-//        System.out.println(count);
-//        Optional<Person> optionalPerson = people.stream().min(Comparator.comparingInt(Person::getAge));
-//        optionalPerson.ifPresent(System.out::println);
-//        IntStream ageStream = people.stream().mapToInt(Person::getAge);
-//        int sum = ageStream.sum();
-//        System.out.println(sum);
-//        IntStream ageStream = people.stream().mapToInt(Person::getAge);
-//        int sum = ageStream.reduce(0, (a, b) -> a + b);
-//        System.out.println(sum);
+//        List<Person> adults = people.stream()
+//                .filter(person -> person.getAge() > 18)
+//                .collect(Collectors.toList());
+//        System.out.println(adults);
+//        Map<String, Integer> adults = people.stream()
+//                .filter(person -> person.getAge() > 18)
+//                .collect(Collectors.toMap(
+//                        Person::getName,
+//                        Person::getAge
+//                ));
+//        System.out.println(adults);
+        Map<String, List<Person>> peopleByCountry = people.stream()
+                .collect(Collectors.groupingBy(Person::getCountry));
+        peopleByCountry.forEach((k, v) -> System.out.println(k + "=" + v));
+
+        Map<Boolean, List<Person>> agePartition = people.stream()
+                .collect(Collectors.groupingBy(person -> person.getAge() > 18));
+        agePartition.forEach((k, v) -> System.out.println(k + "=" + v));
+
         String joinedName = people.stream()
                 .map(Person::getName)
-                .reduce("", (a, b) -> a + b + ",");
+                .collect(Collectors.joining(","));
         System.out.println(joinedName);
 
+        IntSummaryStatistics ageSummary = people.stream()
+                .collect(Collectors.summarizingInt(Person::getAge));
+        System.out.println(ageSummary);
+        System.out.println(ageSummary.getAverage());
+        System.out.println(ageSummary.getMax());
     }
 }
