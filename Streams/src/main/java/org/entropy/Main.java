@@ -12,11 +12,9 @@ import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
-        List.of("E", "N", "T", "R", "O", "P", "Y").parallelStream()
+        List<String> collect = List.of("E", "N", "T", "R", "O", "P", "Y").parallelStream()
                 .map(String::toLowerCase)
-                .forEach(item -> {
-                    System.out.println("Item: " + item + " -> " + " Thread: " + Thread.currentThread().getName());
-                    System.out.println(item);
-                });
+                .collect(Collectors.toList());
+        System.out.println(collect);
     }
 }
