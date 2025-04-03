@@ -2,32 +2,82 @@ package io.github.schance;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 public class MyThreadPool {
 
-    BlockingQueue<Runnable> taskList = new ArrayBlockingQueue<>(1024);
+    private final int corePoolSize;
 
-    Thread thread = new Thread(() -> {
-        while (true) {
-            try {
-                Runnable task = taskList.take();
-                task.run();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+    private final int maxSize;
 
-        }
-    }, "Only-Thread");
+    private final int timeout;
 
-    {
-        thread.start();
+    private final TimeUnit timeUnit;
+
+    BlockingQueue<Runnable> taskList;
+
+    public MyThreadPool(int corePoolSize, int maxSize, int timeout, TimeUnit timeUnit, BlockingQueue<Runnable> taskList) {
+        this.corePoolSize = corePoolSize;
+        this.maxSize = maxSize;
+        this.timeout = timeout;
+        this.timeUnit = timeUnit;
+        this.taskList = taskList;
     }
 
-    List<Thread> threadList = new ArrayList<>();
+    List<Thread> coreList = new ArrayList<>();
+
+    List<Thread> supportList = new ArrayList<>();
 
     void execute(Runnable task) {
-        boolean offer = taskList.offer(task);
+        if (coreList.size() < corePoolSize) {
+            Thread thread = new CoreThread();
+            coreList.add(thread);
+            thread.start();
+        }
+        if (taskList.offer(task)) {
+            return;
+        }
+        if (coreList.size() + supportList.size() < maxSize) {
+            Thread thread = new SupportThread();
+            supportList.add(thread);
+            thread.start();
+        }
+        if (!taskList.offer(task)) {
+            throw new RuntimeException("Task queue is full");
+        }
+    }
+
+    class CoreThread extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Runnable task = taskList.take();
+                    task.run();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    class SupportThread extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    Runnable task = taskList.poll(timeout, timeUnit);
+                    if (task == null) {
+                        supportList.remove(this);
+                        break;
+                    }
+                    task.run();
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            System.out.println("Support thread finished: " + Thread.currentThread().getName());
+        }
     }
 }
