@@ -34,17 +34,19 @@ public class MyThreadPool {
 
     void execute(Runnable task) {
         if (coreList.size() < corePoolSize) {
-            Thread thread = new CoreThread();
+            Thread thread = new CoreThread(task);
             coreList.add(thread);
             thread.start();
+            return;
         }
         if (taskList.offer(task)) {
             return;
         }
         if (coreList.size() + supportList.size() < maxSize) {
-            Thread thread = new SupportThread();
+            Thread thread = new SupportThread(task);
             supportList.add(thread);
             thread.start();
+            return;
         }
         if (!taskList.offer(task)) {
             rejectHandler.reject(task, this);
@@ -52,8 +54,14 @@ public class MyThreadPool {
     }
 
     class CoreThread extends Thread {
+        private final Runnable firstTask;
+        public CoreThread(Runnable firstTask) {
+            this.firstTask = firstTask;
+        }
+
         @Override
         public void run() {
+            firstTask.run();
             while (true) {
                 try {
                     Runnable task = taskList.take();
@@ -66,8 +74,14 @@ public class MyThreadPool {
     }
 
     class SupportThread extends Thread {
+        private final Runnable firstTask;
+        public SupportThread(Runnable firstTask) {
+            this.firstTask = firstTask;
+        }
+
         @Override
         public void run() {
+            firstTask.run();
             while (true) {
                 try {
                     Runnable task = taskList.poll(timeout, timeUnit);
