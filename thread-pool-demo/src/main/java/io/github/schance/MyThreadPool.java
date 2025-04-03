@@ -15,14 +15,17 @@ public class MyThreadPool {
 
     private final TimeUnit timeUnit;
 
-    BlockingQueue<Runnable> taskList;
+    public final BlockingQueue<Runnable> taskList;
 
-    public MyThreadPool(int corePoolSize, int maxSize, int timeout, TimeUnit timeUnit, BlockingQueue<Runnable> taskList) {
+    private final RejectHandler rejectHandler;
+
+    public MyThreadPool(int corePoolSize, int maxSize, int timeout, TimeUnit timeUnit, BlockingQueue<Runnable> taskList, RejectHandler rejectHandler) {
         this.corePoolSize = corePoolSize;
         this.maxSize = maxSize;
         this.timeout = timeout;
         this.timeUnit = timeUnit;
         this.taskList = taskList;
+        this.rejectHandler = rejectHandler;
     }
 
     List<Thread> coreList = new ArrayList<>();
@@ -44,7 +47,7 @@ public class MyThreadPool {
             thread.start();
         }
         if (!taskList.offer(task)) {
-            throw new RuntimeException("Task queue is full");
+            rejectHandler.reject(task, this);
         }
     }
 

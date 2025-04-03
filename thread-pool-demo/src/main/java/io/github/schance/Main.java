@@ -10,17 +10,19 @@ public class Main {
                 4,
                 1,
                 TimeUnit.SECONDS,
-                new ArrayBlockingQueue<>(2)
+                new ArrayBlockingQueue<>(2),
+                new DiscardRejectHandler()
         );
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
+            int finalI = i;
             myThreadPool.execute(() -> {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                System.out.println(Thread.currentThread().getName() + " finished");
+                System.out.println(Thread.currentThread().getName() + " finished. task " + finalI +" completed");
             });
         }
 
