@@ -13,11 +13,13 @@ public class Main {
         MyLock lock = new MyLock();
         for (int i = 0; i < 100; i++) {
             threads.add(new Thread(() -> {
-                lock.lock();
                 for (int j = 0; j < 10; j++) {
+                    lock.lock();
                     count[0]--; // thread unsafe
                 }
-                lock.unlock();
+                for (int j = 0; j < 10; j++) {
+                    lock.unlock();
+                }
             }));
         }
 
