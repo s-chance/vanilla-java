@@ -10,16 +10,11 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         int[] count = new int[]{1000};
         List<Thread> threads = new ArrayList<>();
-        Lock lock = new ReentrantLock();
+        MyLock lock = new MyLock();
         for (int i = 0; i < 100; i++) {
             threads.add(new Thread(() -> {
                 lock.lock();
                 for (int j = 0; j < 10; j++) {
-                    try {
-                        Thread.sleep(2);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                     count[0]--; // thread unsafe
                 }
                 lock.unlock();
