@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MyHashMap<K, V> {
 
-    private Node<K, V>[] table = new Node[10];
+    private Node<K, V>[] table = new Node[16];
 
     private int size = 0;
 
@@ -15,6 +15,7 @@ public class MyHashMap<K, V> {
         if (head == null) {
             table[keyIndex] = new Node<>(key, value);
             size++;
+            resizeIfNecessary();
             return null;
         }
         while (true) {
@@ -26,6 +27,7 @@ public class MyHashMap<K, V> {
             if (head.next == null) {
                 head.next = new Node<>(key, value);
                 size++;
+                resizeIfNecessary();
                 return null;
             }
             head = head.next;
@@ -69,12 +71,41 @@ public class MyHashMap<K, V> {
         return null;
     }
 
+    private void resizeIfNecessary() {
+        if (this.size < table.length * 0.75) {
+            return;
+        }
+        Node<K, V>[] newTable = new Node[table.length * 2];
+        for (Node<K, V> head : table) {
+            if (head == null) {
+                continue;
+            }
+            Node<K, V> current = head;
+            while (current != null) {
+                int newKeyIndex = current.key.hashCode() & (newTable.length - 1);
+                if (newTable[newKeyIndex] == null) {
+                    newTable[newKeyIndex] = current;
+                    Node<K, V> nextNode = current.next;
+                    current.next = null;
+                    current = nextNode;
+                } else {
+                    Node<K, V> nextNode = current.next;
+                    current.next = newTable[newKeyIndex];
+                    newTable[newKeyIndex] = current;
+                    current = nextNode;
+                }
+            }
+        }
+        this.table = newTable;
+        System.out.println("Resized to " + this.table.length);
+    }
+
     public int size() {
         return this.size;
     }
 
     private int indexOf(Object key) {
-        return key.hashCode() % table.length;
+        return key.hashCode() & (table.length - 1);
     }
 
     class Node<K, V> {
